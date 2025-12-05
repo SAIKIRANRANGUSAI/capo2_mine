@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import menu_data from "@/data/menu-data";
 
-// ====== ADD TYPES HERE ======
+// ====== TYPES ======
 type InnerSubMenu = {
   title: string;
   link: string;
@@ -20,10 +20,10 @@ type MenuItem = {
   id?: number;
   title: string;
   link: string;
-  has_dropdown: boolean;
+  has_dropdown?: boolean;
   sub_menus?: SubMenu[];
 };
-// ============================
+// ===================
 
 const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
   const [navTitle, setNavTitle] = useState("");
@@ -51,14 +51,18 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
                 <img src="assets/images/logo.png" alt="logo" />
               </Link>
             </div>
-            <button className="lonyo-menu-toggle mobile" onClick={() => setMenuOpen(false)}>
+            <button
+              className="lonyo-menu-toggle mobile"
+              onClick={() => setMenuOpen(false)}
+            >
               <i className="ri-close-line"></i>
             </button>
           </div>
 
           <div className="lonyo-mobile-menu">
             <ul>
-              {menu_data.map((item: MenuItem, i: number) => (
+              {/* FIXED: removed type from .map() */}
+              {menu_data.map((item, i) => (
                 <li
                   key={i}
                   className={`${item.has_dropdown ? "menu-item-has-children lonyo-item-has-children" : ""} ${
@@ -73,7 +77,9 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
                   {item.has_dropdown && (
                     <ul
                       className="sub-menu"
-                      style={{ display: navTitle === item.title ? "block" : "none" }}
+                      style={{
+                        display: navTitle === item.title ? "block" : "none",
+                      }}
                     >
                       {item.sub_menus?.map((sub_item, index) => (
                         <li
@@ -82,9 +88,14 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
                             navTitle2 === sub_item.title ? "lonyo-active" : ""
                           }`}
                         >
-                          <Link href={sub_item.link} onClick={() => openMobileMenu2(sub_item.title)}>
+                          <Link
+                            href={sub_item.link}
+                            onClick={() => openMobileMenu2(sub_item.title)}
+                          >
                             {sub_item.title}
-                            {sub_item.inner_submenu && <span className="lonyo-mean-expand"></span>}
+                            {sub_item.inner_submenu && (
+                              <span className="lonyo-mean-expand"></span>
+                            )}
                           </Link>
 
                           {sub_item.inner_submenu && (
@@ -94,11 +105,15 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
                                 display: navTitle2 === sub_item.title ? "block" : "none",
                               }}
                             >
-                              {sub_item.sub_menu?.map((inner_sub_item, inner_index) => (
-                                <li key={inner_index}>
-                                  <Link href={inner_sub_item.link}>{inner_sub_item.title}</Link>
-                                </li>
-                              ))}
+                              {sub_item.sub_menu?.map(
+                                (inner_sub_item, inner_index) => (
+                                  <li key={inner_index}>
+                                    <Link href={inner_sub_item.link}>
+                                      {inner_sub_item.title}
+                                    </Link>
+                                  </li>
+                                )
+                              )}
                             </ul>
                           )}
                         </li>
@@ -111,7 +126,11 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
           </div>
 
           <div className="lonyo-mobile-menu-btn">
-            <Link className="lonyo-default-btn sm-size" href="/contact-us" data-text="Get in Touch">
+            <Link
+              className="lonyo-default-btn sm-size"
+              href="/contact-us"
+              data-text="Get in Touch"
+            >
               <span className="btn-wraper">LOGIN</span>
             </Link>
           </div>
