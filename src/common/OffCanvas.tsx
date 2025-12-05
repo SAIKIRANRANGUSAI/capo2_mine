@@ -61,7 +61,6 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
 
           <div className="lonyo-mobile-menu">
             <ul>
-              {/* FIXED: removed type from .map() */}
               {menu_data.map((item, i) => (
                 <li
                   key={i}
@@ -81,46 +80,45 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
                         display: navTitle === item.title ? "block" : "none",
                       }}
                     >
-                      Array.isArray(item?.sub_menus) &&
-  item.sub_menus!.map((sub_item, index) => (
-
-
-                        <li
-                          key={index}
-                          className={`menu-item-has-children lonyo-item-has-children ${
-                            navTitle2 === sub_item.title ? "lonyo-active" : ""
-                          }`}
-                        >
-                          <Link
-                            href={sub_item.link}
-                            onClick={() => openMobileMenu2(sub_item.title)}
+                      {Array.isArray(item?.sub_menus) &&
+                        item.sub_menus!.map((sub_item, index) => (
+                          <li
+                            key={index}
+                            className={`menu-item-has-children lonyo-item-has-children ${
+                              navTitle2 === sub_item.title ? "lonyo-active" : ""
+                            }`}
                           >
-                            {sub_item.title}
-                            {sub_item.inner_submenu && (
-                              <span className="lonyo-mean-expand"></span>
-                            )}
-                          </Link>
-
-                          {sub_item.inner_submenu && (
-                            <ul
-                              className="sub-menu lonyo-submenu"
-                              style={{
-                                display: navTitle2 === sub_item.title ? "block" : "none",
-                              }}
+                            <Link
+                              href={sub_item.link}
+                              onClick={() => openMobileMenu2(sub_item.title)}
                             >
-                              {sub_item.sub_menu?.map(
-                                (inner_sub_item, inner_index) => (
-                                  <li key={inner_index}>
-                                    <Link href={inner_sub_item.link}>
-                                      {inner_sub_item.title}
-                                    </Link>
-                                  </li>
-                                )
+                              {sub_item.title}
+                              {sub_item.inner_submenu && (
+                                <span className="lonyo-mean-expand"></span>
                               )}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
+                            </Link>
+
+                            {sub_item.inner_submenu && (
+                              <ul
+                                className="sub-menu lonyo-submenu"
+                                style={{
+                                  display:
+                                    navTitle2 === sub_item.title ? "block" : "none",
+                                }}
+                              >
+                                {sub_item.sub_menu?.map(
+                                  (inner_sub_item, inner_index) => (
+                                    <li key={inner_index}>
+                                      <Link href={inner_sub_item.link}>
+                                        {inner_sub_item.title}
+                                      </Link>
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
                     </ul>
                   )}
                 </li>
