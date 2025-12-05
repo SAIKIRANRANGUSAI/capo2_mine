@@ -61,7 +61,7 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
 
           <div className="lonyo-mobile-menu">
             <ul>
-              {menu_data.map((item, i) => (
+              {menu_data.map((item: MenuItem, i) => (
                 <li
                   key={i}
                   className={`${item.has_dropdown ? "menu-item-has-children lonyo-item-has-children" : ""} ${
