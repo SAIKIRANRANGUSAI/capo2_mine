@@ -81,7 +81,9 @@ const OffCanvas = ({ setMenuOpen, menuOpen }: any) => {
                         display: navTitle === item.title ? "block" : "none",
                       }}
                     >
-                      {item.sub_menus?.map((sub_item, index) => (
+                      {Array.isArray(item.sub_menus) &&
+  item.sub_menus.map((sub_item, index) => (
+
                         <li
                           key={index}
                           className={`menu-item-has-children lonyo-item-has-children ${
