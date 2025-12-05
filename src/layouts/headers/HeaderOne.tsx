@@ -6,6 +6,28 @@ import menu_data from '@/data/menu-data';
 import useSticky from '@/hooks/use-sticky';
 import { CiLock } from "react-icons/ci";
 
+// ====== TYPES ======
+type InnerSubMenu = {
+  title: string;
+  link: string;
+};
+
+type SubMenu = {
+  title: string;
+  link: string;
+  inner_submenu?: boolean;
+  sub_menu?: InnerSubMenu[];
+};
+
+type MenuItem = {
+  id?: number;
+  title: string;
+  link: string;
+  has_dropdown?: boolean;
+  sub_menus?: SubMenu[];
+};
+// ===================
+
 const HeaderOne = ({ style_2, style_3, toggle_color }: any) => {
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,7 +54,7 @@ const HeaderOne = ({ style_2, style_3, toggle_color }: any) => {
               <div className="lonyo-main-menu-item">
                 <nav className="main-menu menu-style1 d-none d-lg-block float-end">
                   <ul>
-                    {menu_data.map((item, i) => (
+                    {menu_data.map((item: MenuItem, i) => (
                       <li key={i} className={`${item.has_dropdown ? 'menu-item-has-children' : ''}`}>
                         <Link href={item.link} className={`${style_2 ? 'light-color1' : ''}`}>{item.title}</Link>
                         {item.has_dropdown &&
